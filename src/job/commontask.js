@@ -1,0 +1,2 @@
+const commontask = Object.create({});
+

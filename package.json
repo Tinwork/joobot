@@ -1,0 +1,16 @@
+{
+  "name": "joobot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Tinwork/joobot.git",
+  "author": "Marc Intha-amnouay <marc.inthaamnouay@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0"
+  },
+  "scripts": {
+    "start": "node index"
+  }
+}
