@@ -12,5 +12,8 @@
   },
   "scripts": {
     "start": "nodemon ./src/index.js"
+  },
+  "devDependencies": {
+    "ejs": "^2.5.6"
   }
 }

@@ -36,3 +36,9 @@ sql
 
 # Optional REPL history
 .node_repl_history
+
+# Jetbrains
+.idea/*
+
+# Public folder
+public/export/
