@@ -1,8 +1,6 @@
 const express    = require('express'),
       bodyParser = require('body-parser'),
-      createJOB  = require('./job/create'),
-      deleteJOB  = require('./job/delete'),
-      updateJOB  = require('./job/update'),
+      jobManager = require('./job/manager')
       askManager = require('./ask/manager');
 
 // Create our app
@@ -16,8 +14,8 @@ app.get('/', (req, res) => {
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 app.post('/jobs/create', (req, res) => {
-    if (createJOB.checkData(req.body))
-        createJOB.addJobs(req.body).then(suc => {
+    if (jobManager.create.checkData(req.body))
+        jobManager.create.addJobs(req.body).then(suc => {
             res.json({
                 status : suc,
                 error : null
@@ -32,7 +30,7 @@ app.post('/jobs/create', (req, res) => {
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 app.post('/jobs/delete/:id', (req, res) => {
-    deleteJOB.deleteJob(req.params.id).then(suc => {
+    jobManager.delete.deleteJob(req.params.id).then(suc => {
         res.json({
             status : suc,
             error: null
@@ -48,7 +46,7 @@ app.post('/jobs/delete/:id', (req, res) => {
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 app.post('/jobs/update/:id', (req, res) => {
-    updateJOB.updateUser(req.body, req.params.id).then(suc => {
+    jobManager.update.updateUser(req.body, req.params.id).then(suc => {
         res.json({
             status : suc,
             error: null
@@ -61,6 +59,32 @@ app.post('/jobs/update/:id', (req, res) => {
         })
     });
 });
+
+app.get('/jobs/getjob/:id', (req, res) => {
+    jobManager.retrieve.retrieveSomePropsJob(req.params.id)
+        .then(suc => {
+            res.json(suc)
+        })
+        .catch(e => {
+            res.json({
+                status : 'failed',
+                error :e
+            })
+        });
+});
+
+app.get('/jobs/getalljob/:id', (req, res) => {
+    jobManager.retrieve.retrieveAllPropsJob(req.params.id)
+        .then(suc => {
+            res.json(suc)
+        })
+        .catch(e => {
+            res.json({
+                status : 'failed',
+                error: e
+            })
+        })
+})
 
 app.post('/ask/create/', (req, res) => {
     askManager.add.create(req.body)
@@ -93,6 +117,7 @@ app.post('/ask/delete/:id', (req, res) => {
             })
         })
 });
+
 
 app.listen(3000, () => {
     console.log('jobs crud is running');
