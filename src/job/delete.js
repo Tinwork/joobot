@@ -1,4 +1,4 @@
-const sqlManager = require('../db/con');
+const sqlManager = require('../db/dbabstract');
 
 // @TODO export this Object into one interfaces...
 const deleteJobManager = Object.create({});

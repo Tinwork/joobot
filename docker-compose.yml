@@ -1,0 +1,24 @@
+version: '2'
+services: 
+  woobot: 
+    build: .
+    image: woojob
+    container_name: woojob
+    depends_on: 
+      - mysql
+    volumes:
+      - ./src:/usr/src/app/src
+    ports: 
+      - 3000:80
+    command: node src/index.js
+  mysql:
+    image: mysql:5.7
+    container_name: woojob_db
+    volumes: 
+      - ./sql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: joobot  
+      MYSQL_USER: jei 
+      MYSQL_PASSWORD: jei 
+

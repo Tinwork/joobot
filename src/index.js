@@ -1,13 +1,17 @@
 const express    = require('express'),
       bodyParser = require('body-parser'),
-      createJOB  = require('./src/job/create'),
-      deleteJOB  = require('./src/job/delete'),
-      updateJOB  = require('./src/job/update');
+      createJOB  = require('./job/create'),
+      deleteJOB  = require('./job/delete'),
+      updateJOB  = require('./job/update');
 
 // Create our app
 const app = express();
 
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+    res.json({test : 'k'});
+})
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 app.post('/jobs/create', (req, res) => {
