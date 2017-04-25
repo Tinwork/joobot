@@ -1,7 +1,8 @@
 const express = require('express'),
     router = express.Router(),
     jobManager = require('../job/manager'),
-    askManager = require('../ask/manager');
+    askManager = require('../ask/manager'),
+    helper     = require('../helper/helper');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -59,6 +60,7 @@ router.post('/jobs/update/:id', (req, res) => {
 router.get('/jobs/getjob/:id', (req, res) => {
     jobManager.retrieve.retrieveSomePropsJob(req.params.id)
         .then(suc => {
+            console.log('success' +suc);
             res.json(suc)
         })
         .catch(e => {
@@ -72,7 +74,10 @@ router.get('/jobs/getjob/:id', (req, res) => {
 router.get('/jobs/getalljob/:id', (req, res) => {
     jobManager.retrieve.retrieveAllPropsJob(req.params.id)
         .then(suc => {
-            res.json(suc)
+            sanitize = helper.raboot(suc);
+            res.json(sanitize)
+        }, reason => {
+            console.log(reason)
         })
         .catch(e => {
             res.json({

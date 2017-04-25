@@ -1,4 +1,5 @@
-const sqlManager = require('../db/dbabstract');
+const SQLManager = require('../db/dbabstract'),
+      SQLHelper  = require('../db/dbhelper');
 
 // @TODO export this Object into one interfaces...
 const createJobManager = Object.create({});
@@ -29,26 +30,13 @@ createJobManager.checkData = (json = {}) => {
  * @return {Promise} promises
  */
 createJobManager.checkJobs = (con, json) => {
-    return new Promise((resolve, reject) => {
-        con.query('SELECT * FROM jobs WHERE title = ? AND description = ? AND skills = ? AND date_start = ? AND date_end = ?', [
+     return SQLHelper.query(con, 'SELECT * FROM jobs WHERE title = ? AND description = ? AND skills = ? AND date_start = ? AND date_end = ?', [
             json.title,
             json.description,
             json.skills,
             json.date_start,
             json.date_end
-        ], (e, res, fields) => {
-
-            if (e) {
-                reject(e);
-            }
-
-            if (res !== undefined)
-                if (res.length !== 0)
-                reject('data already exist')
-
-            resolve(con);
-        });
-    });
+    ]);
 };
 
 /**
@@ -59,29 +47,25 @@ createJobManager.checkJobs = (con, json) => {
  * @TODO close the connection when finish
  */
 createJobManager.addJobs = json => {
-    let add = sqlManager.initDB().then(con => createJobManager.checkJobs.call(null, con, json))
-        .then((con) => {
-            con.query('INSERT INTO jobs (title, description, skills, date_start, date_end) VALUES (?, ?, ?, ?, ?)', [
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+        .then(con => createJobManager.checkJobs.call(null, con, json))
+        .then(SQLHelper.isEmpty)
+        .then(() => {
+            let con = SQLManager.getDbInstance();
+            SQLHelper.query(con, 'INSERT INTO jobs (title, description, skills, date_start, date_end) VALUES (?, ?, ?, ?, ?)', [
                 json.title,
                 json.description,
                 json.skills,
                 json.date_start,
                 json.date_end
-            ], (e, res, fields) => {
-                if (e) 
-                    return Promise.reject(e);
-
-                return Promise.resolve(fields);
-            });
+            ])
         })
-        .then(() => {
-            return 'success';    
-        })
+        .then(() => resolve('success'))
         .catch(e => {
-           return Promise.reject(e);
-        });
-
-    return Promise.resolve(add);
+            reject(e);
+        })
+    });
 };
 
 

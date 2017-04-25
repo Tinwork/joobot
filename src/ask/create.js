@@ -1,4 +1,5 @@
 const SQLManager = require('../db/dbabstract'),
+      SQLHelper  = require('../db/dbhelper'),
       helper     = require('../helper/helper');
 
 const createQuestion = Object.create({});
@@ -16,21 +17,13 @@ createQuestion.create = (json = {}) => {
 
     return new Promise((resolve, reject) => {
         let create = SQLManager.initDB()
-            .then(con => {
-                con.query('INSERT INTO question (id_job, body, details) VALUES (?, ?, ?)', [
-                    json.id_job,
-                    json.body,
-                    json.details
-                ], (e, res, fields) => {
-                    if (e)
-                        reject(e);
-
-                    resolve('success');
-                });
-            })
-            .catch(e => {
-                return Promise.reject(e);
-            });
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, details) VALUES (?, ?, ?)'), [
+                json.id_job,
+                json.body,
+                json.details
+            ])
+            .then(() => resolve('success'))
+            .catch(e => reject(e));
     });
 };
 

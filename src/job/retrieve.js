@@ -1,5 +1,6 @@
 const SQLManager = require('../db/dbabstract'),
-    helper = require('../helper/helper');
+      SQLHelper  = require('../db/dbhelper'),
+      helper     = require('../helper/helper');
 
 const retrieveJobs = Object.create({});
 
@@ -15,22 +16,9 @@ retrieveJobs.retrieveSomePropsJob = (id = null) => {
 
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => {
-                con.query('SELECT title, img, description, id FROM jobs WHERE id = ?', [
-                    id
-                ], (e, res, fields) => {
-                    if (e)
-                        reject(e);
-
-                    if (res === undefined)
-                        reject(`no job has been found with the id ${id}`);
-
-                    if (res.length === 0)
-                        reject('no data has been found')
-
-                    resolve(res);
-                })
-            })
+            .then(con => SQLHelper.query(con, 'SELECT title, img, description, id FROM jobs WHERE id = ?', [id]))
+            .then(SQLHelper.select)
+            .then(res => {resolve(res);})
             .catch(e => {
                 reject(e);
             });
@@ -40,6 +28,7 @@ retrieveJobs.retrieveSomePropsJob = (id = null) => {
 /**
  * Retrieve All Props Job
  *          Retrieve all the property of a job
+ *          (!) We don't use an inner join
  * @param {String} id
  * @return {Promise <Resolve> | <Reject>} promises
  */
@@ -47,28 +36,36 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
     if (id === null)
         reject('id is null');
 
-    return new Promise((resolve, reject) => {
+    let pm1 = new Promise((resolve, reject) => {
         // Check if the param is empty
         SQLManager.initDB()
-            .then(con => {
-                con.query('SELECT * FROM jobs WHERE id = ?', [
-                    id
-                ], (e, res, fields) => {
-                    if (e) {
-                        console.log(e);
-                        reject(e)
-                    }
-                    
-                    if (res.length === 0)
-                        reject(`no job has been found with the id ${id}`);
-
-                    resolve(res);
-                })
+            .then(con => SQLHelper.query(con, 'SELECT * FROM jobs WHERE id = ?', [id]))
+            .then(SQLHelper.select.bind(null, false))
+            .then(res => SQLHelper.setprops('job', res))
+            .then(() => SQLHelper.getprops('job'))
+            .then(res => {
+                resolve(res);
             })
             .catch(e => {
                 reject(e);
             });
     });
-}
+
+    let pm2 = new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'SELECT * FROM question WHERE id_job = ?', [id]))
+            .then(SQLHelper.select)
+            .then(res => SQLHelper.setprops('questions', res))
+            .then(() => SQLHelper.getprops('questions'))
+            .then(res => {
+                resolve(res);
+            })
+            .catch(e => {
+                reject(e);
+            })
+    });
+
+    return Promise.all([pm1, pm2]);
+};
 
 module.exports = retrieveJobs;

@@ -57,7 +57,7 @@ const sqlManager = (() => {
     return {
         initDB : createConnection,
         close : closeConnection,
-        dbInstance : getDbInstance
+        getDbInstance : getDbInstance
     }
 })();
 
