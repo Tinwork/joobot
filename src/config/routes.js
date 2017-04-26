@@ -9,6 +9,11 @@ router.get('/', function(req, res) {
     res.render('index.html.ejs', { title: 'Express' });
 });
 
+/* GET admin page. */
+router.get('/admin', (req, res) => {
+    res.render('admin/admin.html.ejs', {title: 'admin'});
+});
+
 // @TODO create a response manager (avoid duplicating the res.json...)
 router.post('/jobs/create', (req, res) => {
     if (jobManager.create.checkData(req.body))
