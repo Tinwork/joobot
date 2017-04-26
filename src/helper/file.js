@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const SQLManager = require('../db/dbabstract');
 /**
  * Const
  */
@@ -141,7 +142,15 @@ const fileManager = (() => {
  * @param {Object} con
  * @param {Object} data
  */
-fileManager.export = (con, data) => {
+fileManager.export = (data) => {
+    return new Promise((resolve, reject) => {
+        let con = SQLManager.initDB()
+            .then(con => {
+
+            })
+            .catch(e => reject(e));
+    });
+    
     data = {
         "candidat": {
             "firstname": "Salut",

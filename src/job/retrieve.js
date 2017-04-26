@@ -57,6 +57,11 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
             .then(SQLHelper.select)
             .then(res => {
                 res.map((d, i) => {
+                    if (d.enum.length === 0) {
+                        delete res[i].enum;
+                        return;
+                    }
+
                     let parselist = helper.skill(d, false, 'enum');
                     // inject the enum type
                     parselist.type = 'enum';
