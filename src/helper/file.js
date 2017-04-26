@@ -164,7 +164,7 @@ fileManager.export = (con, data) => {
     };
 
     const dateFolder = fileManager.getDate();
-    const folderExportPath = "../public/export/" + dateFolder;
+    const folderExportPath = path.resolve("./public/export/" + dateFolder);
 
     fileManager.directory.check(folderExportPath).then(function() {
         fileManager.write(folderExportPath, data);
