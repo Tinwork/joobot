@@ -20,7 +20,7 @@ createQuestion.create = (json = {}) => {
         
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, tips, type, list) VALUES (?, ?, ?, ?, ?)', [
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, tips, type, enum) VALUES (?, ?, ?, ?, ?)', [
                 json.id_job,
                 json.body,
                 json.tips,

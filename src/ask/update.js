@@ -13,9 +13,12 @@ updateQuestion.update = (id, json = {}) => {
     if (json === null || json === undefined || Object.keys(json).length === 0)
         return Promise.reject('data is empty');
 
+    if (json.list !== undefined)
+        json.list = SQLHelper.prepList(json.list);
+
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'UPDATE question SET body = ?, tips = ?, type = ? list = ? WHERE id = ?', [
+            .then(con => SQLHelper.query(con, 'UPDATE question SET body = ?, tips = ?, type = ?, enum = ? WHERE id = ?', [
                 json.body,
                 json.tips,
                 json.type,
