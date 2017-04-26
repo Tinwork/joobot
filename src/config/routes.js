@@ -2,7 +2,8 @@ const express = require('express'),
     router = express.Router(),
     jobManager = require('../job/manager'),
     askManager = require('../ask/manager'),
-    helper     = require('../helper/helper');
+    helper     = require('../helper/helper'),
+    fileHelper = require('../helper/file');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -65,7 +66,6 @@ router.post('/jobs/update/:id', (req, res) => {
 router.get('/jobs/getjob/:id', (req, res) => {
     jobManager.retrieve.retrieveSomePropsJob(req.params.id)
         .then(suc => {
-            console.log('success' +suc);
             res.json(suc)
         })
         .catch(e => {
@@ -151,6 +151,15 @@ router.post('/ask/update/:id', (req, res) => {
                 error: e
             })
         })
+});
+
+router.get('/api/candidate', (req, res) => {
+    fileHelper.manager.export(null, null);
+
+    res.json({
+        status: 'OK',
+        error: null
+    });
 });
 
 module.exports = router;
