@@ -1,9 +1,18 @@
+@font-face {
+    font-family: 'proxima-nova';
+    src: url(/assets/fonts/proxima-nova.otf);
+}
+
 :root {
-    --main-bg-color: #252830;
+    --main-bg-color: #1d1e3f;
     --main-font-color: white;
 }
 
 body{
     background-color: var(--main-bg-color);
     color: var(--main-font-color);
+}
+
+.navbar{
+    margin-top: 20px;
 }

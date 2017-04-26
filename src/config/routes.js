@@ -15,6 +15,10 @@ router.get('/admin', (req, res) => {
     res.render('admin/admin.html.ejs', {privileges: 'admin'});
 });
 
+router.get('/admin/job', (req, res) => {
+    res.render('admin/job.html.ejs', {privilege: 'admin'});
+});
+
 // @TODO create a response manager (avoid duplicating the res.json...)
 router.post('/jobs/create', (req, res) => {
     if (jobManager.create.checkData(req.body))
@@ -153,8 +157,8 @@ router.post('/ask/update/:id', (req, res) => {
         })
 });
 
-router.get('/api/candidate', (req, res) => {
-    fileHelper.manager.export(null, null);
+router.post('/api/candidate', (req, res) => {
+    fileHelper.manager.export(null, req.body);
 
     res.json({
         status: 'OK',

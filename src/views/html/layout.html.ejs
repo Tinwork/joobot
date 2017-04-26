@@ -5,9 +5,8 @@
 </head>
 <body>
     <% include header/header.html.ejs %>
-    <div class="container">
+    <div class="container-fluid">
       <% if (privileges === 'admin') { %>
-        <p>admin</p>
         <%- include('../admin/dashboard.html.ejs') %>
       <% }%>
     </div>
