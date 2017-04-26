@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 
 /* GET admin page. */
 router.get('/admin', (req, res) => {
-    res.render('admin/admin.html.ejs', {title: 'admin'});
+    res.render('admin/admin.html.ejs', {privileges: 'admin'});
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
@@ -77,7 +77,6 @@ router.get('/jobs/getjob/:id', (req, res) => {
 });
 
 router.get('/jobs/getalljob', (req, res) => {
-    console.log(jobManager.retrieve);
     jobManager.retrieve.retrieveAllJobs()
         .then(suc => {
             res.json(suc)

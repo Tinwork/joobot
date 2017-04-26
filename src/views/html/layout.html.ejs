@@ -6,7 +6,10 @@
 <body>
     <% include header/header.html.ejs %>
     <div class="container">
-     
+      <% if (privileges === 'admin') { %>
+        <p>admin</p>
+        <%- include('../admin/dashboard.html.ejs') %>
+      <% }%>
     </div>
     <% include footer/footer.html.ejs%>
 </body>

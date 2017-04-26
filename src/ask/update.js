@@ -15,10 +15,11 @@ updateQuestion.update = (id, json = {}) => {
 
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'UPDATE question SET body = ?, tips = ?, type = ? WHERE id = ?', [
+            .then(con => SQLHelper.query(con, 'UPDATE question SET body = ?, tips = ?, type = ? list = ? WHERE id = ?', [
                 json.body,
                 json.tips,
                 json.type,
+                json.list,
                 id
             ]))
             .then(() => resolve('success'))

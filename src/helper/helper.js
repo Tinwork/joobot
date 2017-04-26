@@ -1,6 +1,6 @@
 const helper = (() => {
 
-    let skill;
+    let trimdata;
 
     /**
      * Is Empty
@@ -18,21 +18,21 @@ const helper = (() => {
      * Generate Skills
      * @param {*} data 
      */
-    const generateSkills = (data, isall = false) => {
-        
+    const generateSkills = (data, isall = false, propname) => {
         if (!isall)
-            skill = data.skills.split(',');
+            trimdata = data[propname].split(',');
         else 
-            skill = data.job.skills.split(',');
+            trimdata = data.job[propname].split(',');
 
-        let jobsk = skill.map((d, i) => {
-            skill[i] = d.trim();
+        let jobsk = trimdata.map((d, i) => {
+            trimdata[i] = d.trim();
         });
 
         if (!isall)
-            data.skills = skill;
+            data[propname] = trimdata;
         else 
-            data.job.skills = skill;
+            data.job[propname] = trimdata;
+
 
         return data;
     };
@@ -54,7 +54,7 @@ const helper = (() => {
                 botdata.questions = prop;
         });
 
-        return generateSkills(botdata, true);
+        return generateSkills(botdata, true, 'skills');
     }
 
     

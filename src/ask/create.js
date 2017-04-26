@@ -15,13 +15,17 @@ createQuestion.create = (json = {}) => {
     if (helper.empty(json))
         return Promise.reject('data is empty');
 
+    if (json.list !== undefined)
+        json.list = SQLHelper.prepList(json.list);
+        
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, tips, type) VALUES (?, ?, ?, ?)', [
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, tips, type, list) VALUES (?, ?, ?, ?, ?)', [
                 json.id_job,
                 json.body,
                 json.tips,
-                json.type
+                json.type,
+                json.list
             ]))
             .then(() => resolve('success'))
             .catch(e => reject(e));

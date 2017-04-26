@@ -106,13 +106,31 @@ const dbHelper = (() => {
         });
     };
 
+    /**
+     * Prepare List
+     * @param {*} list
+     * @private 
+     */
+    const prepareList = (lists = []) => {
+        let datalist = '';
+        lists.map((choice, i) => {
+            if (i == lists.length - 1)
+                datalist += `${choice}`;
+            else
+                datalist += `${choice},`;
+        });
+
+        return datalist;
+    };
+
     return {
         select    : selectCallback,
         insert    : insertCallback,
         setprops  : setProps,
         getprops  : getProp,
         query     : dbQuery,
-        isEmpty   : checkEmpty
+        isEmpty   : checkEmpty,
+        prepList  : prepareList
     }
 }).bind({})();
 

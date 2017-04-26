@@ -47,7 +47,6 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
                 resolve(res);
             })
             .catch(e => {
-                console.log(e);
                 reject(e);
             });
     });
@@ -56,7 +55,14 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
         SQLManager.initDB()
             .then(con => SQLHelper.query(con, 'SELECT * FROM question WHERE id_job = ?', [id]))
             .then(SQLHelper.select)
-            .then(res => SQLHelper.setprops('questions', res))
+            .then(res => {
+                res.map((d, i) => {
+                    let parselist = helper.skill(d, false, 'list');
+                    res[i] = parselist;
+                });
+
+                SQLHelper.setprops('questions', res);
+            })
             .then(() => SQLHelper.getprops('questions'))
             .then(res => {
                 resolve(res);
@@ -81,11 +87,9 @@ retrieveJobs.retrieveAllJobs = () => {
             .then(SQLHelper.select)
             .then(res => {
                 res.map(data => {
-                    let d = helper.skill(data, false);
-                    // console.log(d);
+                    let d = helper.skill(data, false, 'skills');
                 });
                 
-                console.log(res);
                 return Promise.resolve(res);
             })
             .then(res => resolve(res))
