@@ -11,7 +11,8 @@
     "mysql": "^2.13.0"
   },
   "scripts": {
-    "start": "nodemon ./bin/server.js"
+    "start": "nodemon ./bin/server.js",
+    "deploy": "nodemon ./bin/server.js conf=build"  
   },
   "devDependencies": {
     "ejs": "^2.5.6"

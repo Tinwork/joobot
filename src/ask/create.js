@@ -16,12 +16,13 @@ createQuestion.create = (json = {}) => {
         return Promise.reject('data is empty');
 
     return new Promise((resolve, reject) => {
-        let create = SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, details) VALUES (?, ?, ?)'), [
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, details, type) VALUES (?, ?, ?, ?)', [
                 json.id_job,
                 json.body,
-                json.details
-            ])
+                json.details,
+                json.type
+            ]))
             .then(() => resolve('success'))
             .catch(e => reject(e));
     });

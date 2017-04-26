@@ -17,8 +17,9 @@ app.set('view engine', 'ejs');
 app.use('/', routes);
 
 app.use(function(req, res, next) {
-    console.log('err');
-    err.status = 404;
+    let err = Object.assign(Object.create({}), {
+        status: 404
+    });
     next(err);
 });
 

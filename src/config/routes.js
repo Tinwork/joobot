@@ -133,4 +133,20 @@ router.post('/ask/delete/:id', (req, res) => {
         })
 });
 
+router.post('/ask/update/:id', (req, res) => {
+    askManager.up.update(req.params.id, req.body)
+        .then(suc => {
+            res.json({
+                status: suc,
+                error: null
+            })
+        })
+        .catch(e => {
+            res.json({
+                status: 'failed',
+                error: e
+            })
+        })
+});
+
 module.exports = router;

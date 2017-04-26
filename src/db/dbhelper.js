@@ -98,6 +98,9 @@ const dbHelper = (() => {
                 res = result;
                 fields = field;
 
+                if (error)
+                    reject(error);
+
                 resolve(true);
             });
         });
