@@ -30,8 +30,9 @@ createJobManager.checkData = (json = {}) => {
  * @return {Promise} promises
  */
 createJobManager.checkJobs = (con, json) => {
-     return SQLHelper.query(con, 'SELECT * FROM jobs WHERE title = ? AND description = ? AND skills = ? AND date_start = ? AND date_end = ?', [
+     return SQLHelper.query(con, 'SELECT * FROM jobs WHERE title = ? AND subtitle = ? AND description = ? AND skills = ? AND date_start = ? AND date_end = ?', [
             json.title,
+            json.subtitle,
             json.description,
             json.skills,
             json.date_start,
@@ -53,8 +54,9 @@ createJobManager.addJobs = json => {
         .then(SQLHelper.isEmpty)
         .then(() => {
             let con = SQLManager.getDbInstance();
-            SQLHelper.query(con, 'INSERT INTO jobs (title, description, skills, date_start, date_end) VALUES (?, ?, ?, ?, ?)', [
+            SQLHelper.query(con, 'INSERT INTO jobs (title, subtitle, description, skills, date_start, date_end) VALUES (?, ?, ?, ?, ?, ?)', [
                 json.title,
+                json.subtitle,
                 json.description,
                 json.skills,
                 json.date_start,

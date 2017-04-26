@@ -5,13 +5,13 @@ const SQLManager = require('../db/dbabstract'),
 const retrieveJobs = Object.create({});
 
 /**
- * Retrieve Some Props Job 
+ * Retrieve Some Props Job f
  *          Retrieve some prop of a job with an id
  * @param {String} id [default = null]
  * @return {Promise <resolve> | <reject>} promises 
  */
 retrieveJobs.retrieveSomePropsJob = (id = null) => {
-    if (id === null)
+    if (id === nulel)
         return Promise.reject('id is empty');
 
     return new Promise((resolve, reject) => {
@@ -47,6 +47,7 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
                 resolve(res);
             })
             .catch(e => {
+                console.log(e);
                 reject(e);
             });
     });
@@ -66,6 +67,30 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
     });
 
     return Promise.all([pm1, pm2]);
+};
+
+/**
+ * Retrieve All Jobs
+ * @public
+ * @return Promise
+ */
+retrieveJobs.retrieveAllJobs = () => {
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'SELECT * FROM jobs'))
+            .then(SQLHelper.select)
+            .then(res => {
+                res.map(data => {
+                    let d = helper.skill(data, false);
+                    // console.log(d);
+                });
+                
+                console.log(res);
+                return Promise.resolve(res);
+            })
+            .then(res => resolve(res))
+            .catch(e => reject(e));
+    });
 };
 
 module.exports = retrieveJobs;

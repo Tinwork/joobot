@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.use('/', routes);
 
 app.use(function(req, res, next) {
-    const err = new Error('Not Found');
+    console.log('err');
     err.status = 404;
     next(err);
 });

@@ -71,7 +71,21 @@ router.get('/jobs/getjob/:id', (req, res) => {
         });
 });
 
-router.get('/jobs/getalljob/:id', (req, res) => {
+router.get('/jobs/getalljob', (req, res) => {
+    console.log(jobManager.retrieve);
+    jobManager.retrieve.retrieveAllJobs()
+        .then(suc => {
+            res.json(suc)
+        })
+        .catch(e => {
+            res.json({
+                status : 'failed',
+                error : e
+            });j
+        })
+})
+
+router.get('/jobs/getdetailjob/:id', (req, res) => {
     jobManager.retrieve.retrieveAllPropsJob(req.params.id)
         .then(suc => {
             sanitize = helper.raboot(suc);

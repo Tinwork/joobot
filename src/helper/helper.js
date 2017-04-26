@@ -1,5 +1,7 @@
 const helper = (() => {
 
+    let skill;
+
     /**
      * Is Empty
      *      Check if empty
@@ -10,6 +12,29 @@ const helper = (() => {
             return true;
 
         return false;
+    };
+
+    /**
+     * Generate Skills
+     * @param {*} data 
+     */
+    const generateSkills = (data, isall = false) => {
+        
+        if (!isall)
+            skill = data.skills.split(',');
+        else 
+            skill = data.job.skills.split(',');
+
+        let jobsk = skill.map((d, i) => {
+            skill[i] = d.trim();
+        });
+
+        if (!isall)
+            data.skills = skill;
+        else 
+            data.job.skills = skill;
+
+        return data;
     };
 
       /**
@@ -26,16 +51,17 @@ const helper = (() => {
            if (i === 0)
                 botdata.job = prop;
             else 
-                botdata.quo = prop;
+                botdata.questions = prop;
         });
-  
-        return botdata;
+
+        return generateSkills(botdata, true);
     }
 
-
+    
     return {
         empty : isEmpty,
-        raboot: generateBotObject
+        raboot: generateBotObject,
+        skill : generateSkills
     }
 })();
 

@@ -3,6 +3,12 @@ logs
 *.log
 npm-debug.log*
 
+# cert
+joobot.pem
+
+# sql
+joobot.sql
+
 # Runtime data
 pids
 *.pid
