@@ -1,0 +1,38 @@
+<% layout('../html/layout.html.ejs') %>
+
+<div class="container-fluid view-candidate">
+    <div class="row">
+        <div class="actions">
+            <button class="btn btn-info">Valider la candidature</button>
+            <button class="btn btn-warning">Mettre en attente la candidature</button>
+            <button class="btn btn-danger">Supprimer la candidature</button>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <h3 class="h3">Profil choisie</h3>
+            <div class="job-profile">
+                <span>Poste à pourvoir :</span><span>Développeur JAVA J2EE</span>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3 class="h3">Compte-rendu de la conversation</h3>
+            <div id="mdToHtml" class="mdToHtml"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let mdText =  `#GFI Candidature n°3243
+    ## Candidat
+    - Mobile : +3365518743
+    ## Compte Rendu
+    >**Quel est vôtre âge ?**<br />&#8594;27 ans
+
+    >**Quels sont vos centres d'activités ?**<br />&#8594;Le sport, la musique et la cuisine`;
+
+    let converter = new showdown.Converter(),
+        html      = converter.makeHtml(mdText.replace(/ /g,''));
+    $('#mdToHtml').html(html);
+</script>

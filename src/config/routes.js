@@ -26,8 +26,16 @@ router.get('/user/edit', (req, res) => {
     res.render('user/account.html.ejs', { title: 'Mon compte' });
 });
 
+router.get('/rabbots', (req, res) => {
+    res.render('rabbots/list.html.ejs', { title: 'Rabbots' });
+});
+
 router.get('/candidats', (req, res) => {
     res.render('candidate/list.html.ejs', { title: 'Candidats' });
+});
+
+router.get('/candidats/:id', (req, res) => {
+    res.render('candidate/view.html.ejs', { title: 'Candidats' });
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
