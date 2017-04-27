@@ -1,13 +1,5 @@
 <%
-    getProfile = function(){
-        fetch('/jobs/getalljob').then(res => {
-            return Promise.resolve(res.json)
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-    }
+   readData = function(name) {
+       return name;
+   }
 %>

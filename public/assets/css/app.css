@@ -43,3 +43,8 @@ h3, .h3 {
 .view-candidate .mdToHtml h1{
     font-size: 32px;
 }
+
+.front h1, .front h3{
+    text-align: center;
+    color: black;
+}
