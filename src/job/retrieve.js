@@ -119,4 +119,17 @@ retrieveJobs.candidate = (id) => {
     });
 };
 
+/**
+ * Get All Candidate
+ */
+retrieveJobs.getAllCandidate = () => {
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'SELECT candidate FROM jobs'))
+            .then(SQLHelper.select)
+            .then(res => resolve(res))
+            .catch(e => reject(e));
+    });
+}
+
 module.exports = retrieveJobs;

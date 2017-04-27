@@ -9,8 +9,18 @@ const app = express();
 
 app.engine('ejs', engine);
 
-app.use(bodyParser.json());
 app.use('/static', express.static(__dirname + '/public'));
+
+app.use(bodyParser.json({
+  limit: '300mb',
+  extended: true,
+  parameterLimit: 1000
+}))
+app.use(bodyParser.urlencoded({
+  limit: '300mb',
+  extended: true,
+  parameterLimit: 1000
+}))
 
 // Set EJS as view engine
 app.set('views', path.join(__dirname, '/src/views'));
