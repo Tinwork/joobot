@@ -397,6 +397,7 @@ fileManager.export = data => {
     }).catch(function (err) {
         console.log(err)
     });
+
     
     fileSQLManager.exec(JSON.parse(copy));
 };
