@@ -43,3 +43,7 @@ h3, .h3 {
 .view-candidate .mdToHtml h1{
     font-size: 32px;
 }
+
+.choices {
+    display: block;
+}
