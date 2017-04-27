@@ -51,6 +51,11 @@ router.get('/rabbots', (req, res) => {
     res.render('rabbots/list.html.ejs', { title: 'Rabbots' });
 });
 
+router.get('/rabbots/new', (req, res) => {
+    res.render('rabbots/new.html.ejs', { title: 'Rabbots' });
+});
+
+
 router.get('/candidats', (req, res) => {
     jobManager.retrieve.getAllCandidate()
         .then(r => {
