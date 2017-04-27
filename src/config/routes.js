@@ -7,16 +7,27 @@ const express = require('express'),
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('index.html.ejs', { title: 'Express' });
+    res.render('index.html.ejs', { title: 'Tableau de bord' });
 });
 
-/* GET admin page. */
-router.get('/admin', (req, res) => {
-    res.render('admin/admin.html.ejs', {privileges: 'admin'});
+router.get('/questions', (req, res) => {
+    res.render('question/question.html.ejs', { title: 'Questions' });
 });
 
-router.get('/admin/job', (req, res) => {
-    res.render('admin/job.html.ejs', {privilege: 'admin'});
+router.get('/jobs', (req, res) => {
+    res.render('job/job.html.ejs', { title: 'Profils' });
+});
+
+router.get('/jobs/new', (req, res) => {
+    res.render('job/new.html.ejs', { title: 'Création profil' });
+});
+
+router.get('/user/edit', (req, res) => {
+    res.render('user/account.html.ejs', { title: 'Mon compte' });
+});
+
+router.get('/candidats', (req, res) => {
+    res.render('candidate/list.html.ejs', { title: 'Candidats' });
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
@@ -89,7 +100,7 @@ router.get('/jobs/getalljob', (req, res) => {
             res.json({
                 status : 'failed',
                 error : e
-            });j
+            });
         })
 })
 

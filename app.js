@@ -1,5 +1,5 @@
 const express    = require('express'),
-      ejs        = require('ejs'),
+      engine     = require('ejs-locals'),
       path       = require('path'),
       routes     = require('./src/config/routes'),
       bodyParser = require('body-parser');
@@ -7,8 +7,10 @@ const express    = require('express'),
 // Create our app
 const app = express();
 
+app.engine('ejs', engine);
+
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use('/static', express.static(__dirname + '/public'));
 
 // Set EJS as view engine
 app.set('views', path.join(__dirname, '/src/views'));

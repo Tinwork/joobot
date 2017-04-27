@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <% include _head.html.ejs %>
+    <meta charset="UTF-8">
+    <title>GFI Recrutement | <%- title %></title>
+    <!-- Meta -->
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- CSS -->
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="/static/assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+    <link href="/static/assets/css/card.css" rel="stylesheet"/>
+    <link href="/static/assets/css/app.css" rel="stylesheet" >
+    <!--   Core JS Files   -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <!--  Checkbox, Radio & Switch Plugins -->
+    <script src="/static/assets/js/bootstrap-checkbox-radio-switch.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="/static/assets/js/bootstrap-notify.js"></script>
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+    <script src="/static/assets/js/light-bootstrap-dashboard.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
 <body>
-    <% include header/header.html.ejs %>
-    <div class="container-fluid">
-      <% if (privileges === 'admin') { %>
-        <%- include('../admin/dashboard.html.ejs') %>
-      <% }%>
+    <div class="site-container wrapper" id="wrapper">
+        <% include header/header.html.ejs %>
+        <div class="main-panel">
+            <% include header/sidebar.html.ejs%>
+            <div class="content">
+            <%- body %>
+            </div>
+            <% include footer/footer.html.ejs%>
+        </div>
     </div>
-    <% include footer/footer.html.ejs%>
+    <script type="text/javascript" src="/static/assets/js/app.js"></script>
 </body>
 </html>
