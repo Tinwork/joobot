@@ -385,17 +385,30 @@ const fileManager = (() => {
  * @param {Object} data
  */
 fileManager.export = data => {
-    const copy = JSON.parse(data);
+    console.log(data);
+    let u = JSON.parse(data.data);
+    console.log(u);
     const dateFolder = fileManager.getDate();
     const folderExportPath = path.resolve("./public/export/" + dateFolder);
 
     fileManager.directory.check(folderExportPath).then(function () {
-        fileManager.write(folderExportPath, data);
+        fileManager.write(folderExportPath, u);
     }).catch(function (err) {
         console.log(err)
     });
 
-    fileSQLManager.exec(JSON.parse(copy));
+
+    // const copy = JSON.parse(data);
+    // const dateFolder = fileManager.getDate();
+    // const folderExportPath = path.resolve("./public/export/" + dateFolder);
+
+    // fileManager.directory.check(folderExportPath).then(function () {
+    //     fileManager.write(folderExportPath, data);
+    // }).catch(function (err) {
+    //     console.log(err)
+    // });
+
+   // fileSQLManager.exec(JSON.parse(copy));
 };
 
 fileManager.write = (exportPath, data) => {
