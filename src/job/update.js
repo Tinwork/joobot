@@ -31,4 +31,21 @@ updateJobManager.updateUser = (json, id = null) => {
     }); 
 };
 
+/**
+ * Update Candidate List
+ */
+updateJobManager.updateCandidateList = (list, id) => {
+    id = id.split('_')[1];
+    console.log(list);
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'UPDATE jobs SET candidate = ? WHERE id = ?', [
+                list,
+                id
+            ]))
+            .then(() => resolve('success'))
+            .catch(e => reject(e));
+    });
+}
+
 module.exports = updateJobManager;

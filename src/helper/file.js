@@ -6,6 +6,7 @@ const path = require('path');
 const mkdirp = require('mkdirp');
 const SQLManager = require('../db/dbabstract');
 const SQLHelper = require('../db/dbhelper');
+const jobs = require('../job/manager');
 /**
  * Const
  */
@@ -18,6 +19,8 @@ const fileSQLManager = function () {
 
     let user = Object.create({});
     let question = Object.create({});
+    let id;
+    let jobid;
 
     /**
      * Check if the user exist in the database
@@ -49,6 +52,7 @@ const fileSQLManager = function () {
      * @param {*} user_id 
      */
     const updateList = (newlist, user_id) => {
+        id = user_id;
         return new Promise((resolve, reject) => {
             SQLManager.initDB()
                 .then(con => SQLHelper.query(con, 'UPDATE candidate SET apply_list = ? WHERE id = ?', [
@@ -69,7 +73,6 @@ const fileSQLManager = function () {
         cleanProps();
         // wipe the old prop
         if (data !== undefined || data !== null) {
-            console.log('setting prop');
             Object.assign(user, data.candidat);
 
             // now we mutate the object, we delete the candidate object from the original object
@@ -77,6 +80,7 @@ const fileSQLManager = function () {
 
             // set the rest of the object which are the questions...
             Object.assign(question, data);
+            jobid = Object.keys(question)[0];
         }
     };
 
@@ -106,25 +110,41 @@ const fileSQLManager = function () {
      * @param {*} current_data 
      */
     const makeListData = (current_data) => {
+        let profileuid = new Array();
         // we try to avoid mutation of the object we might use it after...
         let copy = new Array();
         // The type of the current_data is an ARRAY and shall ALWAYS be an ARRAY...
         if (current_data[0].apply_list === '')
             copy.push(JSON.stringify(question));
         else {
-    
-            // console.log(question);
-            // console.log(current_data); 
-
-            current_data.map(d => {
-                copy.push(d.apply_list);
+            current_data.map((d, i) => {
+                if (Array.isArray(JSON.parse(d.apply_list))){
+                    let p = JSON.parse(d.apply_list);
+                    p.map(u => {
+                        copy.push(u);
+                    });
+                } else {
+                    copy.push(JSON.parse(d.apply_list));
+                }
             });
 
-            copy.push(JSON.stringify(question));
+            copy.push(question);
+            
+            let str = '[';
+            copy.map((d,i) => {
+                if (i !== copy.length - 1)
+                    str += `${JSON.stringify(d)},`;
+                else 
+                    str += `${JSON.stringify(d)}`;
+            });
 
-            console.log(copy);
+            str += ']';
+           
+            return str;
         }
-       
+
+
+        // extract the ID from the last job 
         return copy;
     }
 
@@ -164,10 +184,28 @@ const fileSQLManager = function () {
                     user.mobile,
                     makeListData([{apply_list: ''}])
                 ]))
-                .then(() => resolve('success'))
+                .then(res => {
+                    id = res.insertId;
+                    resolve('success');
+                })
                 .catch(e => reject(e));
         });
     };
+
+
+    const updateCandidateInJob = (list) => {
+    
+        let ev ='';
+        if (list[0].candidate === null)
+            ev = id;
+        else {
+             ev = list[0].candidate;
+             ev += `, ${id}`;
+        }
+           
+        
+        return ev;
+    }
 
     /**
      * Exec Flow 
@@ -192,6 +230,13 @@ const fileSQLManager = function () {
                     return Promise.resolve('success');
 
                 return Promise.resolve(implementApplyList(data))
+            })
+            .then(() => {
+                return Promise.resolve(jobs.retrieve.candidate(jobid));
+            })
+            .then(list => {
+                let l = updateCandidateInJob(list);
+                return Promise.resolve(jobs.update.updateCandidateList(l, jobid));
             })
             .catch(e => {
                 console.log(e);
@@ -340,17 +385,18 @@ const fileManager = (() => {
  * @param {Object} data
  */
 fileManager.export = (data) => {
+    
+    const copy = JSON.stringify(data);
+    const dateFolder = fileManager.getDate();
+    const folderExportPath = path.resolve("./public/export/" + dateFolder);
 
-    fileSQLManager.exec(data);
+    fileManager.directory.check(folderExportPath).then(function () {
+        fileManager.write(folderExportPath, data);
+    }).catch(function (err) {
+        console.log(err)
+    });
 
-    // const dateFolder = fileManager.getDate();
-    // const folderExportPath = path.resolve("./public/export/" + dateFolder);
-
-    // fileManager.directory.check(folderExportPath).then(function () {
-    //     fileManager.write(folderExportPath, data);
-    // }).catch(function (err) {
-    //     console.log(err)
-    // });
+    fileSQLManager.exec(JSON.parse(copy));
 };
 
 fileManager.write = (exportPath, data) => {
