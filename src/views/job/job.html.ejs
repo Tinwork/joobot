@@ -8,22 +8,23 @@
         </div>
     </div>
     <div class="row">
-        <% for(var i=0; i < 3; i++) { %>
+        
+        <% for(var i=0; i < jobs.length; i++) { %>
         <div class="col-lg-3 col-sm-4 col-md-4 col-xs-6">
             <a href="#" id="#" class="douceur-item">
                 <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
                     <div class="flipper">
                         <div class="front">
-                            <img src="/static/assets/img/rabbot/rabbot_dev.png" alt="">
-                            <span class="job-name">Développeur J2EE</span>
+                            <img src="<%= jobs[i].thumb %>" alt="">
+                            <span class="job-name"><%= jobs[i].title %></span>
                         </div>
                         <div class="back">
                             <div class="card">
-                                <span class="douceur-name">gfgfdg</span>
-                                <span class="douceur-lastname">gfdgfd</span>
-                                <span class="douceur-lastname">gfdgfdg</span>
+                                <span class="douceur-name"><%= jobs[i].subtitle %></span>
+                                <span class="douceur-lastname"><%= jobs[i].date_start %></span>
+                                <span class="douceur-lastname"><%= jobs[i].date_end %></span>
                                 <div class="description">
-                                    <p>gfdgfd</p>
+                                    <p><%= jobs[i].description %></p>
                                 </div>
                             </div>
                         </div>
@@ -34,4 +35,5 @@
         <% } %>
     </div>
 </div>
+
 

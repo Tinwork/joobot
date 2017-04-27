@@ -15,7 +15,21 @@ router.get('/questions', (req, res) => {
 });
 
 router.get('/jobs', (req, res) => {
-    res.render('job/job.html.ejs', { title: 'Profils' });
+    jobManager.retrieve.retrieveAllJobs()
+        .then(suc => {
+            res.render('job/job.html.ejs', { 
+                title: 'Profils',
+                jobs: suc
+            });
+        })
+        .catch(e => {
+            res.json({
+                status : 'failed',
+                error : e
+            });
+    
+    })
+    
 });
 
 router.get('/jobs/new', (req, res) => {
@@ -27,17 +41,23 @@ router.get('/user/edit', (req, res) => {
 });
 
 router.get('/candidats', (req, res) => {
-    res.render('candidate/list.html.ejs', { title: 'Candidats' });
+    jobManager.retrieve.getAllCandidate()
+        .then(r => {
+            console.log(r);
+            res.render('candidate/list.html.ejs', { title: 'Candidats', data: r});
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 router.post('/jobs/create', (req, res) => {
+    console.log(req.body);
     if (jobManager.create.checkData(req.body))
         jobManager.create.addJobs(req.body).then(suc => {
-            res.json({
-                status : suc,
-                error : null
-            })
+            res.redirect('/jobs');
         }).catch(e => {
             res.json({
                 status : 'failed',

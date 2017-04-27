@@ -21,11 +21,15 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="date-start">Date de début :</label>
-                    <input type="text" name="date-start" id="date-start" class="form-control">
+                    <input type="text" name="date_start" id="date-start" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="date-end">Date de fin :</label>
-                    <input type="text" name="date-end" id="date-end" class="form-control">
+                    <input type="text" name="date_end" id="date-end" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="subtitle">Connaissance requise :</label>
+                    <input type="text" name="skills" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="thumbnail">Miniature :</label>
@@ -44,7 +48,7 @@
 </div>
 <script type="text/javascript">
     $( function() {
-        $( "#date-start" ).datepicker();
-        $( "#date-end" ).datepicker();
+        $( "#date-start" ).datepicker({dateFormat: "yy-mm-dd"});
+        $( "#date-end" ).datepicker({dateFormat: "yy-mm-dd"});
     } );
 </script>
