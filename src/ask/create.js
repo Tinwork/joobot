@@ -20,14 +20,18 @@ createQuestion.create = (json = {}) => {
         
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO question (body, tips, type, enum) VALUES (?, ?, ?, ?)', [
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (body, tips, type, enum, open) VALUES (?, ?, ?, ?, ?)', [
                 json.body,
                 json.tips,
                 json.type,
-                json.list
+                json.list,
+                json.open
             ]))
             .then(() => resolve('success'))
-            .catch(e => reject(e));
+            .catch(e => {
+                console.log(e);
+                reject(e)
+            });
     });
 };
 

@@ -169,6 +169,7 @@ router.get('/jobs/getdetailjob/:id', (req, res) => {
 })
 
 router.post('/ask/create/', (req, res) => {
+    console.log(req.body);
     askManager.add.create(req.body)
         .then(suc => {
             res.json({

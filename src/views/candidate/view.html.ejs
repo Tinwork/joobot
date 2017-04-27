@@ -34,9 +34,23 @@
 </div>
 
 <script>
-    let url = window.location;
+    let url = window.location.href;
 
-    let converter = new showdown.Converter(),
-        html      = converter.makeHtml(mdText.replace(/ /g,''));
-    $('#mdToHtml').html(html);
+    // now we need to parse the url
+    id = url.split('/');
+
+    fetch(`/api/md/${id[4]}`)
+        .then(res => {
+            return Promise.resolve(res.json())
+        })
+        .then(data => {
+            console.log(data.data);
+
+            let converter = new showdown.Converter(),
+            html = converter.makeHtml(data.data.replace(/ /g,''));
+            $('#mdToHtml').html(html);
+        })
+        .catch(e => console.log(e));
+
+    
 </script>
