@@ -17,6 +17,10 @@ router.get('/questions', (req, res) => {
     res.render('question/question.html.ejs', { title: 'Questions' });
 });
 
+router.get('/questions/new', (req, res) => {
+    res.render('question/new.html.ejs', { title: 'Ajouter une question' });
+});
+
 router.get('/jobs', (req, res) => {
     jobManager.retrieve.retrieveAllJobs()
         .then(suc => {

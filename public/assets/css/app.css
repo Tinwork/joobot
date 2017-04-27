@@ -44,7 +44,13 @@ h3, .h3 {
     font-size: 32px;
 }
 
+
 .front h1, .front h3{
     text-align: center;
     color: black;
+}
+
+.choices {
+    display: block;
+
 }

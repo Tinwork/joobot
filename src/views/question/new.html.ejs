@@ -1,0 +1,159 @@
+<% layout('../html/layout.html.ejs') %>
+<div class="container-fluid">
+    <div class="row">
+        <form action="/questions/create" method="POST" id="form_question">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="libelle">Quel est l'intitulé de votre question ?</label>
+                    <input type="text" class="form-control" name="libelle" id="question_libelle">
+                    <label style="margin-top: 5px" for="tips">Indice</label>
+                    <input type="text" class="form-control" name="tips">
+                    <br />
+                    <button class="btn btn-warning" id="form_question_reset">Recommencer</button>
+                    <button class="btn btn-success" id="form_question_valid">Valider</button>
+                </div>
+            </div>
+            <div class="col-lg-12 child">
+                <div class="form-group">
+                    <label for="type">De quelle forme est-elle ?</label>
+                    <select name="type" id="type" class="form-control">
+                        <option value="--">-- Choisir une option --</option>
+                        <option value="bool">Vrai / Faux</option>
+                        <option value="open">Ouverte</option>
+                        <option value="choice">Liste à choix</option>
+                    </select>
+                </div>
+            </div>
+            <div style="padding-bottom: 10px" class="col-lg-12 subchild choice-box">
+                <div class="choices" id="choices">
+                    <span>Les options :</span>
+                </div>
+                <input style="margin-top: 5px" type="text" id="ipt-add-choice">
+                <button type="submit" id="btn-add-choice">Ajouter</button>
+            </div>
+            <div class="col-lg-12 subchild child-submit">
+                <div class="form-group">
+                    <label for="answer">Quelle est la réponse associée ?</label>
+                    <input type="text" class="form-control" name="answer" id="question_answer">
+                    <ul style="margin-top: 8px">
+                        <li>Dans le cas d'un TRUE/FALSE, écrire la valeur dans le champs texte</li>
+                        <li>Dans le cas d'une question ouverte, laisser vide</li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <hr />
+                    <input type="submit" value="Enregistrer" id="form_question_btn_submit" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    jQuery(window).ready(function () {
+        let parcel = {};
+        let TYPE = "string";
+        let OPEN = false;
+
+        let btnQuestionValid = jQuery('#form_question_valid');
+        let btnQuestionReset = jQuery('#form_question_reset');
+
+        let selectType = jQuery('#type');
+
+        let subChilds = jQuery('div.subchild');
+        let typeChild = jQuery('div.child');
+        let choiceChild = jQuery('div.choice-box');
+        let submitChild = jQuery('div.child-submit');
+
+        let choices = jQuery('#choices');
+
+        subChilds.hide();
+        typeChild.hide();
+
+        btnQuestionValid.on('click', function (e) {
+            let inputQuestion = jQuery('#question_libelle');
+            let questionValue = inputQuestion.val();
+            if (!questionValue) {
+                return false;
+            }
+            typeChild.show('slow');
+        });
+
+        selectType.on('change', function (e) {
+            let optionValue = selectType.val();
+            switch (optionValue) {
+                case "bool" :
+                    TYPE = "string";
+                    OPEN = true;
+                    choiceChild.hide();
+                    submitChild.show();
+                    break;
+                case "open" :
+                    TYPE = "string";
+                    OPEN = false;
+                    choiceChild.hide();
+                    submitChild.show();
+                    break;
+                case "choice" :
+                    TYPE = "enum";
+                    OPEN = false;
+                    submitChild.show();
+                    choiceChild.show();
+                    break;
+                default:
+                    TYPE = "string";
+                    OPEN = false;
+                    submitChild.hide();
+                    break;
+            }
+        });
+
+        jQuery('button#btn-add-choice').on('click', function(e) {
+            let input = jQuery('#ipt-add-choice');
+            let value = input.val();
+            let obj = `<span class="choices" data-choice='${value}'>- ${value}</span>`;
+            choices.append(obj);
+            input.val(null);
+        });
+
+        btnQuestionReset.on('click', function(e) {
+           window.location.reload();
+        });
+
+        jQuery('form#form_question').on('submit', function (e) {
+            return false;
+        });
+
+        jQuery('#form_question_btn_submit').on('click', function (e) {
+            parcel.body = jQuery('input[name="libelle"]').val();
+            parcel.tips = jQuery('input[name="tips"]').val();
+            parcel.answer = jQuery('input[name="answer"]').val();
+            parcel.type = TYPE;
+            if (OPEN) {
+                parcel.open = true;
+            } else {
+                delete(parcel.open);
+            }
+            if (parcel.type === "enum") {
+                let result = []
+                let options = jQuery('span.choices');
+                options.each(function (option) {
+                    let context = jQuery(options[option]);
+                    let data = context.attr('data-choice');
+                    result.push(data);
+                });
+                parcel.list = result.join();
+            } else {
+                delete(parcel.list);
+            }
+
+            jQuery.ajax({
+                url: '/ask/create/',
+                method : 'POST',
+                data: parcel,
+                success: function (data) {
+                    window.location.href = "/questions";
+                },
+            });
+        });
+    });
+</script>
