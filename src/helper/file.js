@@ -385,7 +385,6 @@ const fileManager = (() => {
  * @param {Object} data
  */
 fileManager.export = data => {
-    data = data.data;
     const copy = JSON.stringify(data);
     const dateFolder = fileManager.getDate();
     const folderExportPath = path.resolve("./public/export/" + dateFolder);
