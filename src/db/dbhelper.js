@@ -101,7 +101,7 @@ const dbHelper = (() => {
                 if (error)
                     reject(error);
 
-                resolve(true);
+                resolve(res);
             });
         });
     };

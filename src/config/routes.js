@@ -169,7 +169,7 @@ router.post('/ask/update/:id', (req, res) => {
 });
 
 router.post('/api/candidate', (req, res) => {
-    fileHelper.manager.export(null, req.body);
+    fileHelper.manager.export(req.body);
 
     res.json({
         status: 'OK',

@@ -57,6 +57,11 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
             .then(SQLHelper.select)
             .then(res => {
                 res.map((d, i) => {
+                    if (d.enum.length === 0) {
+                        delete res[i].enum;
+                        return;
+                    }
+
                     let parselist = helper.skill(d, false, 'enum');
                     // inject the enum type
                     parselist.type = 'enum';
@@ -94,6 +99,21 @@ retrieveJobs.retrieveAllJobs = () => {
                 
                 return Promise.resolve(res);
             })
+            .then(res => resolve(res))
+            .catch(e => reject(e));
+    });
+};
+
+/**
+ * Candidate
+ */
+retrieveJobs.candidate = (id) => {
+    id = id.split('_')[1];
+
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'SELECT candidate FROM jobs WHERE id = ?', [id]))
+            .then(SQLHelper.select)
             .then(res => resolve(res))
             .catch(e => reject(e));
     });
