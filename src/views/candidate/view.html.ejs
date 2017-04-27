@@ -13,7 +13,17 @@
         <div class="col-lg-6">
             <h3 class="h3">Profil choisie</h3>
             <div class="job-profile">
-                <span>Poste à pourvoir :</span><span>Développeur JAVA J2EE</span>
+                <span>Poste à pourvoir :</span><span><%= data.res[0].title %></span>
+            </div>
+            <div class="job-description">
+                <br>
+                <h3>Description :</h3>
+                    <%= data.res[0].description %>
+            </div>
+            <div class="job-description">
+                <br>
+                <h3>Compétences requise :</h3>
+                    <%= data.res[0].skills %>
             </div>
         </div>
         <div class="col-lg-6">
@@ -24,13 +34,7 @@
 </div>
 
 <script>
-    let mdText =  `#GFI Candidature n°3243
-    ## Candidat
-    - Mobile : +3365518743
-    ## Compte Rendu
-    >**Quel est vôtre âge ?**<br />&#8594;27 ans
-
-    >**Quels sont vos centres d'activités ?**<br />&#8594;Le sport, la musique et la cuisine`;
+    let url = window.location;
 
     let converter = new showdown.Converter(),
         html      = converter.makeHtml(mdText.replace(/ /g,''));

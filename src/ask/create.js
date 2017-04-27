@@ -20,8 +20,7 @@ createQuestion.create = (json = {}) => {
         
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO question (id_job, body, tips, type, enum) VALUES (?, ?, ?, ?, ?)', [
-                json.id_job,
+            .then(con => SQLHelper.query(con, 'INSERT INTO question (body, tips, type, enum) VALUES (?, ?, ?, ?)', [
                 json.body,
                 json.tips,
                 json.type,
@@ -30,6 +29,26 @@ createQuestion.create = (json = {}) => {
             .then(() => resolve('success'))
             .catch(e => reject(e));
     });
+};
+
+/**
+ * Choose Question
+ * @param {Object} json
+ */
+createQuestion.chooseQuestion = (json = {}) => {
+    let str = JSON.stringify({questions: json.questions});
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'INSERT INTO bot (id_job, id_question) VALUES (?, ?)', [
+                json.id_job,
+                str
+            ]))
+            .then(res => resolve(res))
+            .catch(e => {
+                console.log(e);
+                reject(e)
+            });
+    }); 
 };
 
 module.exports = createQuestion;

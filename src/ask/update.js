@@ -30,4 +30,24 @@ updateQuestion.update = (id, json = {}) => {
     });
 };
 
+/**
+ * Update Bot
+ * @param {Int} id 
+ * @param {Object} json
+ */
+updateQuestion.updateBot = (id, json = {}) => {
+
+    let str = JSON.stringify({questions: json.questions});
+    return new Promise((resolve, reject) => {
+        SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'UPDATE bot SET id_job = ?, id_question = ? WHERE id = ?', [
+                json.id_job,
+                str,
+                id
+            ]))
+            .then(res => resolve('success'))
+            .catch(e => reject(e));
+    }); 
+};
+
 module.exports = updateQuestion;

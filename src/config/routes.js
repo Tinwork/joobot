@@ -3,7 +3,10 @@ const express = require('express'),
     jobManager = require('../job/manager'),
     askManager = require('../ask/manager'),
     helper     = require('../helper/helper'),
-    fileHelper = require('../helper/file');
+    fileHelper = require('../helper/file'),
+    candidateManager  = require('../candidate/candidate'),
+    readf = require('../helper/readfile')
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -55,13 +58,26 @@ router.get('/candidats', (req, res) => {
             res.render('candidate/list.html.ejs', { title: 'Candidats', data: r});
         })
         .catch(e => {
+            res.render('candidate/list.html.ejs', { title: 'Candidats', data: null});
             console.log(e);
         })
     
 });
 
 router.get('/candidats/:id', (req, res) => {
-    res.render('candidate/view.html.ejs', { title: 'Candidats' });
+    candidateManager.retrieveByID(req.params.id)
+        .then(suc => {
+            console.log(suc);
+            res.render('candidate/view.html.ejs', { title: 'Candidats', data : suc});
+        })
+        .catch(e => {
+            res.render('candidate/view.html.ejs', { title: 'Candidats', data : e});
+        })
+    
+});
+
+router.post('/loadmd/:name', (req, res) => {
+
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
@@ -184,6 +200,38 @@ router.post('/ask/delete/:id', (req, res) => {
         })
 });
 
+router.post('/ask/set/', (req, res) => {
+    askManager.add.chooseQuestion(req.body)
+        .then(suc => {
+            res.json({
+                status : 'success',
+                error : null
+            });
+        })
+        .catch(e => {
+            res.json({
+                status: 'failed',
+                error: e
+            })
+        })
+})
+
+router.post('/bot/update/:id', (req, res) => {
+    askManager.up.updateBot(req.params.id, req.body)
+        .then(suc => {
+            res.json({
+                status: 'success',
+                error: 'null'
+            })
+        })
+        .catch(e => {
+            res.json({
+                status: 'failed',
+                error: e
+            })
+        })
+});
+
 router.post('/ask/update/:id', (req, res) => {
     askManager.up.update(req.params.id, req.body)
         .then(suc => {
@@ -196,6 +244,23 @@ router.post('/ask/update/:id', (req, res) => {
             res.json({
                 status: 'failed',
                 error: e
+            })
+        })
+});
+
+router.get('/api/md/:id', (req, res) => {
+    readf.read('aa')
+        .then(suc => {
+            res.json({
+                data : suc,
+                error: null
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            res.json({
+                data : null,
+                error : e
             })
         })
 });

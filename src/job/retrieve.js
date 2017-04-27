@@ -33,6 +33,8 @@ retrieveJobs.retrieveSomePropsJob = (id = null) => {
  * @return {Promise <Resolve> | <Reject>} promises
  */
 retrieveJobs.retrieveAllPropsJob = (id = null) => {
+    let botquestion;
+
     if (id === null)
         reject('id is null');
 
@@ -53,7 +55,28 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
 
     let pm2 = new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'SELECT * FROM question WHERE id_job = ?', [id]))
+            .then(con => SQLHelper.query(con, 'SELECT * FROM bot WHERE id_job = ?', [id]))
+            .then(SQLHelper.select)
+            .then(res => {
+                let qID = new Array();
+
+                let con = SQLManager.getDbInstance();
+                let data = JSON.parse(res[0].id_question).questions;
+                let sql = 'SELECT * FROM question WHERE ';
+                data.map((q, i) => {
+                    if (i !== data.length - 1)
+                        sql += ' id = ? OR '
+                    else 
+                        sql += 'id = ?';
+
+                    qID.push(q);
+                });
+
+                console.log(sql);
+                console.log(qID);
+
+                return Promise.resolve(SQLHelper.query(con, sql, qID))
+            })
             .then(SQLHelper.select)
             .then(res => {
                 res.map((d, i) => {
@@ -78,6 +101,7 @@ retrieveJobs.retrieveAllPropsJob = (id = null) => {
                 reject(e);
             })
     });
+
 
     return Promise.all([pm1, pm2]);
 };
@@ -125,7 +149,7 @@ retrieveJobs.candidate = (id) => {
 retrieveJobs.getAllCandidate = () => {
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'SELECT candidate FROM jobs'))
+            .then(con => SQLHelper.query(con, 'SELECT * FROM candidate'))
             .then(SQLHelper.select)
             .then(res => resolve(res))
             .catch(e => reject(e));
