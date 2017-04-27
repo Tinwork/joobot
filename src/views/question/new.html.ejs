@@ -141,9 +141,9 @@
                     let data = context.attr('data-choice');
                     result.push(data);
                 });
-                parcel.list = result.join();
+                parcel.lists = result.join();
             } else {
-                delete(parcel.list);
+                delete(parcel.lists);
             }
 
             jQuery.ajax({
