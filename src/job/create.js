@@ -54,13 +54,14 @@ createJobManager.addJobs = json => {
         .then(SQLHelper.isEmpty)
         .then(() => {
             let con = SQLManager.getDbInstance();
-            SQLHelper.query(con, 'INSERT INTO jobs (title, subtitle, description, skills, date_start, date_end, thumb) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+            SQLHelper.query(con, 'INSERT INTO jobs (title, subtitle, description, skills, date_start, date_end, img, thumb) VALUES (?, ?, ?, ?, ?, ?, ?)', [
                 json.title,
                 json.subtitle,
                 json.description,
                 json.skills,
                 json.date_start,
                 json.date_end,
+                null,
                 json.thumbnail
             ])
         })
