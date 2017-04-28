@@ -30,9 +30,9 @@ router.get('/jobs', (req, res) => {
             });
         })
         .catch(e => {
-            res.json({
-                status : 'failed',
-                error : e
+            res.render('job/job.html.ejs', { 
+                title: 'Profils',
+                jobs: null
             });
     
     })

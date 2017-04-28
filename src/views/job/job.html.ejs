@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row">
-
+        <% if (jobs !== null) { %>
         <% for(var i=0; i < jobs.length; i++) { %>
         <div class="col-lg-3 col-sm-4 col-md-4 col-xs-6">
             <a href="#" id="#" class="douceur-item">
@@ -30,6 +30,7 @@
                 </div>
             </a>
         </div>
+        <% } %>
         <% } %>
     </div>
 </div>
