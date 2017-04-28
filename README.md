@@ -1,4 +1,4 @@
-<img src="https://upload.wikimedia.org/wikipedia/fr/3/31/Logo_GFI_2011.jpg" alt="GFI Informatique" style="width: 200px;"/>
+![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/thumb/3/31/Logo_GFI_2011.jpg/280px-Logo_GFI_2011.jpg)
 # Dashboard - GFI Recrutement
 
 This is our application for GFI Recrutement. <br />
