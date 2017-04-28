@@ -1,4 +1,4 @@
-![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/3/31/Logo_GFI_2011.jpg)
+![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/3/31/Logo_GFI_2011.jpg=250x)
 # Dashboard - GFI Recrutement
 
 This is our application for GFI Recrutement. <br />
