@@ -1,5 +1,5 @@
+![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/3/31/Logo_GFI_2011.jpg)
 # Dashboard - GFI Recrutement
-[logo]: https://upload.wikimedia.org/wikipedia/fr/3/31/Logo_GFI_2011.jpg "Logo GFI"
 
 This is our application for GFI Recrutement. <br />
 The dashboard allows GFI recruitment services to configure questions / profiles and bots.
