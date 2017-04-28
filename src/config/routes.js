@@ -52,14 +52,24 @@ router.get('/rabbots', (req, res) => {
 });
 
 router.get('/rabbots/new', (req, res) => {
-    res.render('rabbots/new.html.ejs', { title: 'Rabbots' });
+    
+    let pm1 = jobManager.retrieve.retrieveAllJobs();
+    let pm2 = askManager.get.allQuestion();
+
+    Promise.all([pm1, pm2])
+        .then(data => {
+             if (data.length === 2)
+                res.render('rabbots/new.html.ejs', { title: 'Rabbots', jobs : data[0], questions: data[1]});
+            else 
+                res.render('rabbots/new.html.ejs', { title: 'Rabbots', jobs : [], questions: []});
+        })
+        .catch(e => console.log(e));
 });
 
 
 router.get('/candidats', (req, res) => {
     jobManager.retrieve.getAllCandidate()
         .then(r => {
-            console.log(r);
             res.render('candidate/list.html.ejs', { title: 'Candidats', data: r});
         })
         .catch(e => {
@@ -72,7 +82,6 @@ router.get('/candidats', (req, res) => {
 router.get('/candidats/:id', (req, res) => {
     candidateManager.retrieveByID(req.params.id)
         .then(suc => {
-            console.log(suc);
             res.render('candidate/view.html.ejs', { title: 'Candidats', data : suc});
         })
         .catch(e => {
@@ -81,13 +90,21 @@ router.get('/candidats/:id', (req, res) => {
     
 });
 
+router.get('/candidats/remove/:id', (req, res) => {
+    candidateManager.remove(req.params.id)
+        .then(suc => res.redirect('/candidats'))
+        .catch(e => {
+            console.log(e);
+            res.redirect('/candidats')
+        });
+});
+
 router.post('/loadmd/:name', (req, res) => {
 
 });
 
 // @TODO create a response manager (avoid duplicating the res.json...)
 router.post('/jobs/create', (req, res) => {
-    console.log(req.body);
     if (jobManager.create.checkData(req.body))
         jobManager.create.addJobs(req.body).then(suc => {
             res.redirect('/jobs');
@@ -174,7 +191,6 @@ router.get('/jobs/getdetailjob/:id', (req, res) => {
 })
 
 router.post('/ask/create/', (req, res) => {
-    console.log(req.body);
     askManager.add.create(req.body)
         .then(suc => {
             res.json({
@@ -255,7 +271,7 @@ router.post('/ask/update/:id', (req, res) => {
 });
 
 router.get('/api/md/:id', (req, res) => {
-    readf.read('aa')
+    readf.read(req.params.id)
         .then(suc => {
             res.json({
                 data : suc,
