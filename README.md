@@ -35,7 +35,7 @@ The dashboard allows GFI recruitment services to configure questions / profiles 
 - Select the right choices
 - Valid
 ### Rabbot in action :
-- Partie d'Antoine
+- [rabbot](https://github.com/Aktanee/rabbot)
 ### Candidature
 - Click on the tab "Candidature"
 - Here, you can saw all the future candidate who came from Rabbot.
