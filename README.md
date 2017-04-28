@@ -1,10 +1,9 @@
 
 
 <div style="text-align:center" markdown="1">
-
 ![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/thumb/3/31/Logo_GFI_2011.jpg/280px-Logo_GFI_2011.jpg)
-
 </div>
+
 # Dashboard - GFI Recrutement
 
 This is our application for GFI Recrutement. <br />
