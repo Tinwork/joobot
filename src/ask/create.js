@@ -24,7 +24,7 @@ createQuestion.create = (json = {}) => {
                 json.body,
                 json.tips,
                 json.type,
-                json.list,
+                json.lists,
                 json.open
             ]))
             .then(() => resolve('success'))
@@ -40,22 +40,24 @@ createQuestion.create = (json = {}) => {
  * @param {Object} json
  */
 createQuestion.chooseQuestion = (json = []) => {
-  //  let str = JSON.stringify({questions: json.questions});
+    json = json.data;
+  //  
     let sql = 'INSERT INTO bot (id_job, id_question) VALUES ';
     let arr = new Array();
     json.map((data, i) => {
+        let str = JSON.stringify({questions: data.questions});
+        
         if (i !== json.length - 1)
-            sql += ' (?, ?),';
+            sql += ` (${data.id_job}, '${str}'),`;
         else 
-            sql += ' (?, ?)';
+            sql += ` (${data.id_job}, '${str}')`;
 
-        arr.push(data);
+
     });
-
 
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, sql, arr))
+            .then(con => SQLHelper.query(con, sql))
             .then(res => resolve(res))
             .catch(e => {
                 console.log(e);
