@@ -4,138 +4,31 @@
         <form action="#" id="form-bot" method="POST">
             <div class="col-lg-6">
                 <h2>Les profils disponibles : </h2>
-                <ul class="list-group" id="job-checkbox">
-                    <li class="list-group-item">
-                        Bootstrap Switch Default
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionDefault" data-id="1" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionDefault" class="label-default"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Primary
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionPrimary" data-id="2" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionPrimary" class="label-primary"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Success
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionSuccess" data-id="3" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionSuccess" class="label-success"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Info
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionInfo" data-id="4" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionInfo" class="label-info"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Warning
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionWarning" data-id="5" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionWarning" class="label-warning"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Danger
-                        <div class="material-switch pull-right">
-                            <input id="someSwitchOptionDanger" data-id="6" name="cbox-job" type="checkbox"/>
-                            <label for="someSwitchOptionDanger" class="label-danger"></label>
-                        </div>
-                    </li>
+                <!-- List group -->
+                <ul class="list-group">
+                     <% for (var i = 0; i < jobs.length; i++) {%>
+                        <li class="list-group-item">
+                            <%= jobs[i].title %>
+                            <div class="material-switch pull-right">
+                                <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox" data-id="<%= jobs[i].id %>"/>
+                                <label for="someSwitchOptionDefault" class="label-default"></label>
+                            </div>
+                        </li>
+                    <% } %>
                 </ul>
             </div>
             <div class="col-lg-6">
                 <h2>Les questions à poser : </h2>
-                <ul class="list-group" id="questions-checkbox">
-                    <li class="list-group-item">
-                        Bootstrap Switch Default
-                        <div class="material-switch pull-right">
-                            <input id="aa" name="cbox-question" data-id="1" type="checkbox"/>
-                            <label for="aa" class="label-default"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Primary
-                        <div class="material-switch pull-right">
-                            <input id="bb" name="cbox-question" data-id="2" type="checkbox"/>
-                            <label for="bb" class="label-primary"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Success
-                        <div class="material-switch pull-right">
-                            <input id="cc" name="cbox-question" data-id="3" type="checkbox"/>
-                            <label for="cc" class="label-success"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Info
-                        <div class="material-switch pull-right">
-                            <input id="dd" name="cbox-question" data-id="4" type="checkbox"/>
-                            <label for="dd" class="label-info"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Warning
-                        <div class="material-switch pull-right">
-                            <input id="ee" name="cbox-question" data-id="5" type="checkbox"/>
-                            <label for="ee" class="label-warning"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Danger
-                        <div class="material-switch pull-right">
-                            <input id="ff" name="cbox-question" data-id="6" type="checkbox"/>
-                            <label for="ff" class="label-danger"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Default
-                        <div class="material-switch pull-right">
-                            <input id="gg" name="cbox-question" data-id="7" type="checkbox"/>
-                            <label for="gg" class="label-default"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Primary
-                        <div class="material-switch pull-right">
-                            <input id="hh" name="cbox-question" data-id="8" type="checkbox"/>
-                            <label for="hh" class="label-primary"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Success
-                        <div class="material-switch pull-right">
-                            <input id="ll" name="cbox-question" data-id="9" type="checkbox"/>
-                            <label for="ll" class="label-success"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Info
-                        <div class="material-switch pull-right">
-                            <input id="nn" name="cbox-question" data-id="10" type="checkbox"/>
-                            <label for="nn" class="label-info"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Warning
-                        <div class="material-switch pull-right">
-                            <input id="mm" name="cbox-question" data-id="11" type="checkbox"/>
-                            <label for="mm" class="label-warning"></label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        Bootstrap Switch Danger
-                        <div class="material-switch pull-right">
-                            <input id="pp" name="cbox-question" data-id="12" type="checkbox"/>
-                            <label for="pp" class="label-danger"></label>
-                        </div>
-                    </li>
+                <ul class="list-group">
+                    <% for (var i = 0; i < questions.length; i++) {%>
+                        <li class="list-group-item">
+                            <%= questions[i].body %>
+                            <div class="material-switch pull-right">
+                                <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox" data-id="<%= questions[i].id %>"/>
+                                <label for="someSwitchOptionDefault" class="label-default"></label>
+                            </div>
+                        </li>
+                    <% } %>
                 </ul>
             </div>
             <hr />

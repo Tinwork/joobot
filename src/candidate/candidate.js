@@ -8,7 +8,7 @@ const candidate = (() => {
      * Ret ID 
      * @param {*} id 
      */
-    const retID = (id) => {
+    const retID = id => {
 
         let keys;
         let candidateData;
@@ -56,8 +56,39 @@ const candidate = (() => {
         });
     };
 
+    /**
+     * Retrieve Candidate By Name
+     * @param {*} id 
+     */
+    const retrieveCandidateByName = id => {
+        return new Promise((resolve, reject) => {
+            SQLManager.initDB()
+                .then(con => SQLHelper.query(con, 'SELECT * FROM candidate WHERE id = ?', [id]))
+                .then(SQLHelper.select)
+                .then(res => resolve(res))
+                .catch(e => reject(e));
+        });
+    };
+
+    /**
+     * Remove Candidate
+     * @param {*} id 
+     * @return {Promise} promises
+     */
+    const removeCandidate = id => {
+        return new Promise((resolve, reject) => {
+            console.log(id);
+            SQLManager.initDB()
+                .then(con => SQLHelper.query(con, 'DELETE FROM candidate WHERE id = ?', [id]))
+                .then(res => resolve(res))
+                .catch(e => reject(e));
+        });
+    };  
+
     return {
-        retrieveByID : retID
+        retrieveByID : retID,
+        retrieveByName: retrieveCandidateByName,
+        remove: removeCandidate
     }
 })();
 
