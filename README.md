@@ -1,8 +1,6 @@
 
 
-<div style="text-align:center">
 ![GFI Informatique](https://upload.wikimedia.org/wikipedia/fr/thumb/3/31/Logo_GFI_2011.jpg/280px-Logo_GFI_2011.jpg)
-</div>
 
 # Dashboard - GFI Recrutement
 
