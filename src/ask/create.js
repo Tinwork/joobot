@@ -39,14 +39,23 @@ createQuestion.create = (json = {}) => {
  * Choose Question
  * @param {Object} json
  */
-createQuestion.chooseQuestion = (json = {}) => {
-    let str = JSON.stringify({questions: json.questions});
+createQuestion.chooseQuestion = (json = []) => {
+  //  let str = JSON.stringify({questions: json.questions});
+    let sql = 'INSERT INTO bot (id_job, id_question) VALUES ';
+    let arr = new Array();
+    json.map((data, i) => {
+        if (i !== json.length - 1)
+            sql += ' (?, ?),';
+        else 
+            sql += ' (?, ?)';
+
+        arr.push(data);
+    });
+
+
     return new Promise((resolve, reject) => {
         SQLManager.initDB()
-            .then(con => SQLHelper.query(con, 'INSERT INTO bot (id_job, id_question) VALUES (?, ?)', [
-                json.id_job,
-                str
-            ]))
+            .then(con => SQLHelper.query(con, sql, arr))
             .then(res => resolve(res))
             .catch(e => {
                 console.log(e);

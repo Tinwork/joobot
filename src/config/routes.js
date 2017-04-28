@@ -223,6 +223,7 @@ router.post('/ask/delete/:id', (req, res) => {
 });
 
 router.post('/ask/set/', (req, res) => {
+    console.log(req.body);
     askManager.add.chooseQuestion(req.body)
         .then(suc => {
             res.json({

@@ -24,8 +24,8 @@
                         <li class="list-group-item">
                             <%= questions[i].body %>
                             <div class="material-switch pull-right">
-                                <input id="someSwitchOptionDefault" name="cbox-question" type="checkbox" data-id="<%= questions[i].id %>"/>
-                                <label for="someSwitchOptionDefault" class="label-default"></label>
+                                <input id="default_2" name="cbox-question" type="checkbox" data-id="<%= questions[i].id %>"/>
+                                <label for="default_2" class="label-default"></label>
                             </div>
                         </li>
                     <% } %>
@@ -62,14 +62,27 @@
                 });
             }
 
-            jQuery.ajax({
-                url: '/ask/set/',
-                method : 'POST',
-                data: parcel,
-                success: function (data) {
-                    window.location.href = "/rabbots";
-                },
+            console.log(parcel);
+
+            // jQuery.ajax({
+            //     url: '/ask/set/',
+            //     method : 'POST',
+            //     data: parcel,
+            //     success: function (data) {
+            //         window.location.href = "/rabbots";
+            //     },
+            // });
+
+
+            fetch(`/api/set/`, {
+                method: 'POST',
+                body: parcel
+            })
+            .then(res => {
+                   console.log(res);
+            })
+            .catch(e => console.log(e));
+
             });
-        });
     });
 </script>
