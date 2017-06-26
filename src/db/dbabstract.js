@@ -14,7 +14,7 @@ const sqlManager = (() => {
         host : 'localhost',
         database : 'joobot'
     });
-
+ 
     /**
      * Create Connection
      *      Create a connection to the database

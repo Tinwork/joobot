@@ -1,13 +1,35 @@
 <% layout('html/layout.html.ejs') %>
 <div class="container-fluid">
     <div class="row">
+        <h2 style="text-align: center; font-weight: 300; display: block">Voir les dernieres candidatures</h2>
         <section class="candidates">
-            <h2>Voir les dernieres candidatures :</h2>
-            <div>
-                <li>Pierre</li>
-                <li>John</li>
-                <li>Adrien</li>
-            </div>
+            
+        
+        <% if (jobs === null ) {%>
+            <p>No jobs found</p>
+        <% } else { %>
+            <% for (i = 0; i < jobs.length; i++) { %>
+                <div class="col-lg-3 col-sm-4 col-md-4 col-xs-6">
+                    <a href="/candidats/<%= jobs[i].id %>" id="#" class="douceur-item">
+                        <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                            <div class="flipper">
+                                <div class="front">
+                                    <h1><%= jobs[i].firstname %></h1>
+                                    <h3><%= jobs[i].lastname %></h3>
+                                </div>
+                                <div class="back">
+                                    <div class="card">
+                                        <span class="douceur-name"><%= jobs[i].lastname %></span>
+                                        <span class="douceur-lastname"><%= jobs[i].email %></span>
+                                        <span class="douceur-lastname"><%= jobs[i].mobile %></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        <% } %>
         </section>
     </div>
 </div>

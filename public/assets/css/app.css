@@ -45,9 +45,15 @@ h3, .h3 {
 }
 
 
-.front h1, .front h3{
+.front h1, .front h2, .front h3{
     text-align: center;
     color: black;
+}
+
+.front h1{
+    font-size: 26px;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .choices {

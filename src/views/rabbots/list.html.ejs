@@ -4,4 +4,68 @@
         <a style="float: right" href="/rabbots/new" class="btn btn-info">Créer un nouveau bot</a>
     </div>
     <hr />
+    <div>
+        <h2>Developer</h2>
+        <div class="row" style="display: flex">
+            <% if (bot.dev === undefined ) {%>
+                <p style="text-align: center; margin: 0 auto;"><strong>Developer bot does not exist</strong></p>
+            <% } else if (bot.dev.length === 0){ %>
+                <p style="text-align: center; margin: 0 auto;"><strong>Developer bot does not exist</strong></p>
+            <% } else {%>
+                <% for (var i = 0; i < bot.dev.length; i++ ) {%>
+                    <div class="flip-container">
+                        <div class="">
+                            <div class="front">
+                                <img src="/static/assets/img/rabbot/rabbot_dev.png" alt="">
+                                <span class="job-name"><%= bot.dev[i].title %> - <%= bot.dev[i].profile %></span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                <% } %>
+            <% }%>
+        </div>
+        <hr />
+        <h2>Designer</h2>
+        <div class="row" style="display: flex">
+            <% if (bot.design === undefined ) {%>
+                <p style="text-align: center; margin: 0 auto;"><strong>Design bot does not exist</strong></p>
+            <% } else if (bot.design.length === 0){ %>
+                <p style="text-align: center; margin: 0 auto;"><strong>Design bot does not exist</strong></p>
+            <% } else {%>
+                <% for (var i = 0; i < bot.design.length; i++ ) {%>
+                    <div class="flip-container">
+                        <div class="">
+                            <div class="front">
+                                <img src="/static/assets/img/rabbot/rabbot_design.png" alt="">
+                                <span class="job-name"><%= bot.design[i].title %> - <%= bot.design[i].profile %></span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                <% } %>
+            <% }%>
+        </div>
+        <hr />
+        <h2>Manager</h2>
+        <div class="row" style="display: flex">
+            <% if (bot.manager === undefined) {%>
+                <p style="text-align: center; margin: 0 auto;"><strong>Manager bot does not exist</strong></p>
+            <% } else if (bot.manager.length === 0){ %>
+                <p style="text-align: center; margin: 0 auto;"><strong>Manager bot does not exist</strong></p>
+            <% } else {%>
+                <% for (var i = 0; i < bot.manager.length; i++ ) {%>
+                    <div class="flip-container">
+                        <div class="">
+                            <div class="front">
+                                <img src="/static/assets/img/rabbot/rabbot_project.png" alt="">
+                                <span class="job-name"><%= bot.manager[i].title %> - <%= bot.manager[i].profile %></span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                <% } %>
+            <% }%>
+        </div>
+    </div>
 </div>

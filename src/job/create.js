@@ -41,6 +41,20 @@ createJobManager.checkJobs = (con, json) => {
 };
 
 /**
+ * Retrieve Profile Type
+ * @param {String} profileID
+ * @return {String} profile
+ */
+createJobManager.retrieveProfileType = (profileID) => {
+    if (profileID.includes('dev'))
+        return 'dev';
+    else if (profileID.includes('design'))
+        return 'design';
+
+    return 'manager';
+};
+
+/**
  * Add Jobs
  *      Adding jobs into the database return @boolean if succeed
  * @param {Object} json
@@ -54,14 +68,15 @@ createJobManager.addJobs = json => {
         .then(SQLHelper.isEmpty)
         .then(() => {
             let con = SQLManager.getDbInstance();
-            SQLHelper.query(con, 'INSERT INTO jobs (title, subtitle, description, skills, date_start, date_end, thumb) VALUES (?, ?, ?, ?, ?, ?, ?)', [
+            SQLHelper.query(con, 'INSERT INTO jobs (title, subtitle, description, skills, date_start, date_end, thumb, profile) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
                 json.title,
                 json.subtitle,
                 json.description,
                 json.skills,
                 json.date_start,
                 json.date_end,
-                json.thumbnail
+                json.thumbnail,
+                createJobManager.retrieveProfileType(json.thumbnail)
             ])
         })
         .then(() => resolve('success'))

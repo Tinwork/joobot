@@ -10,7 +10,7 @@
                         <li class="list-group-item">
                             <%= jobs[i].title %>
                             <div class="material-switch pull-right">
-                                <input id="job_<%=i%>"  name="cbox-job" type="checkbox" data-id="<%= jobs[i].id %>"/>
+                                <input id="job_<%=i%>"  name="cbox-job" type="checkbox" data-id="<%= jobs[i].id %>" data-profile="<%= jobs[i].profile %>" data-title="<%= jobs[i].title %>"/>
                                 <label for="job_<%=i%>" class="label-success"></label>
                             </div>
                         </li>
@@ -49,7 +49,10 @@
 
             checkBoxJobChoices.each(function(){
                 console.log(jQuery(this));
-                parcelJob.push(jQuery(this).data('id'));
+                parcelJob.push({id: jQuery(this).data('id'), 
+                                profile: jQuery(this).attr('data-profile'),
+                                title: jQuery(this).attr('data-title')
+                               });
             });
             checkBoxQuestionsChoices.each(function(){
                 parcelQuestions.push(jQuery(this).data('id'));
@@ -57,12 +60,12 @@
 
             for (let job in parcelJob) {
                 parcel.push({
-                    'id_job' : parcelJob[job],
+                    'id_job' : parcelJob[job].id,
+                    'profile':parcelJob[job].profile,
+                    'title':parcelJob[job].title,
                     'questions' : parcelQuestions
                 });
             }
-
-            console.log(parcel);
 
             jQuery.ajax({
                 url: '/ask/set/',
@@ -72,16 +75,6 @@
                     window.location.href = "/rabbots";
                 }
             });
-
-
-            // fetch(`/ask/set`, {
-            //     method: 'POST',
-            //     body: {data: parcel}
-            // })
-            // .then(res => {
-            //        console.log(res);
-            // })
-            // .catch(e => console.log(e));
 
                 return false;
 

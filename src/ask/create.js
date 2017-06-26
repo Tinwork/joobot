@@ -41,16 +41,16 @@ createQuestion.create = (json = {}) => {
  */
 createQuestion.chooseQuestion = (json = []) => {
     json = json.data;
-  //  
-    let sql = 'INSERT INTO bot (id_job, id_question) VALUES ';
+  
+    let sql = 'INSERT INTO bot (id_job, id_question, profile, title) VALUES ';
     let arr = new Array();
     json.map((data, i) => {
         let str = JSON.stringify({questions: data.questions});
         
         if (i !== json.length - 1)
-            sql += ` (${data.id_job}, '${str}'),`;
+            sql += ` (${data.id_job}, '${str}'), '${data.profile}', '${data.title}'`;
         else 
-            sql += ` (${data.id_job}, '${str}')`;
+            sql += ` (${data.id_job}, '${str}', '${data.profile}', '${data.title}')`;
 
 
     });

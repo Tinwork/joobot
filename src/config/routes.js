@@ -2,6 +2,7 @@ const express = require('express'),
     router = express.Router(),
     jobManager = require('../job/manager'),
     askManager = require('../ask/manager'),
+    botDao     = require('../bot/botDao'),
     helper     = require('../helper/helper'),
     fileHelper = require('../helper/file'),
     candidateManager  = require('../candidate/candidate'),
@@ -10,7 +11,12 @@ const express = require('express'),
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('index.html.ejs', { title: 'Tableau de bord' });
+    jobManager.retrieve.getLastCandidate()
+    .then(jobs => {
+        res.render('index.html.ejs', { title: 'Tableau de bord' , jobs: jobs});
+    })
+    .catch(e => res.render('index.html.ejs', { title: 'Tableau de bord', jobs: null}))
+    
 });
 
 router.get('/questions', (req, res) => {
@@ -48,7 +54,13 @@ router.get('/user/edit', (req, res) => {
 });
 
 router.get('/rabbots', (req, res) => {
-    res.render('rabbots/list.html.ejs', { title: 'Rabbots' });
+    botDao.getBots().then(d => {
+        res.render('rabbots/list.html.ejs', { title: 'Rabbots', bot: d });
+    })
+    .catch(e => {
+        res.render('rabbots/list.html.ejs', { title: 'Rabbots', bot: {}, error: 'Oops an error happened please contact the techncal services' });
+    }) 
+    
 });
 
 router.get('/rabbots/new', (req, res) => {
@@ -223,7 +235,6 @@ router.post('/ask/delete/:id', (req, res) => {
 });
 
 router.post('/ask/set/', (req, res) => {
-    console.log(req.body);
     askManager.add.chooseQuestion(req.body)
         .then(suc => {
             res.json({

@@ -159,4 +159,15 @@ retrieveJobs.getAllCandidate = () => {
     });
 }
 
+/**
+ * Get Last Candidate
+ */
+retrieveJobs.getLastCandidate = () => {
+    return SQLManager.initDB()
+            .then(con => SQLHelper.query(con, 'SELECT * FROM candidate ORDER BY id DESC LIMIT 0, 10'))
+            .then(SQLHelper.select)
+            .then(res => Promise.resolve(res))
+            .catch(e => Promise.reject(e));
+}
+
 module.exports = retrieveJobs;
