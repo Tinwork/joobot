@@ -1,7 +1,23 @@
 <% layout('../html/layout.html.ejs') %>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" style="margin-bottom: 10px;">
         <a href="/questions/new" class="btn btn-info">Ajouter une nouvelle question</a>
+    </div>
+    <div class="col-lg-12">
+        <ul class="list-group">
+                    <% if (questions === null) {%>
+                        <h3 style="text-align: center"><strong>No questions yet</strong></h3>
+                    <% } else {%>
+                        <% for (var i = 0; i < questions.length; i++) {%>
+                            <li class="list-group-item">
+                                <%= questions[i].body %>
+                                <div class="material-switch pull-right">
+                                    <input id="default_<%=i%>" name="cbox-question" type="checkbox" data-id="<%= questions[i].id %>"/>
+                                </div>
+                            </li>
+                        <% } %>
+                    <% } %>
+        </ul>
     </div>
 </div>

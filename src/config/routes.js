@@ -20,7 +20,13 @@ router.get('/', function(req, res) {
 });
 
 router.get('/questions', (req, res) => {
-    res.render('question/question.html.ejs', { title: 'Questions' });
+    askManager.get.allQuestion().then(suc => {
+        res.render('question/question.html.ejs', { title: 'Questions' , questions: suc});
+    })
+    .catch(e => {
+        res.render('question/question.html.ejs', { title: 'Questions' , questions: null});
+
+    });
 });
 
 router.get('/questions/new', (req, res) => {
